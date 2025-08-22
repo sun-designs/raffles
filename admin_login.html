@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.title}} - Attomos Admin</title>
+    <link rel="stylesheet" href="/static/css/admin/admin_login.css">
+</head>
+<body>
+    <div class="admin-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <h1>ATTOMOS</h1>
+                    <span class="admin-badge">ADMIN</span>
+                </div>
+                <h2>Panel de Administración</h2>
+                <p>Ingresa tus credenciales para acceder</p>
+            </div>
+            
+            <form class="login-form" id="adminLoginForm" method="POST" action="/admin/login">
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="username" name="username" required>
+                        <span class="input-icon">👤</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" name="password" required>
+                        <span class="input-icon">🔒</span>
+                        <button type="button" class="toggle-password" id="togglePassword">👁️</button>
+                    </div>
+                </div>
+                
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="rememberMe" name="remember">
+                        <span class="checkmark"></span>
+                        Recordar sesión
+                    </label>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Iniciar Sesión</span>
+                    <div class="btn-loader"></div>
+                </button>
+                
+                <div class="error-message" id="errorMessage" style="display: none;">
+                    <span class="error-icon">⚠️</span>
+                    <span class="error-text"></span>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <a href="/" class="back-link">← Volver al sitio principal</a>
+            </div>
+        </div>
+        
+        <div class="background-animation">
+            <div class="floating-shape shape-1"></div>
+            <div class="floating-shape shape-2"></div>
+            <div class="floating-shape shape-3"></div>
+            <div class="floating-shape shape-4"></div>
+        </div>
+    </div>
+    
+    <script src="/static/js/admin/admin_login.js"></script>
+</body>
+</html>
