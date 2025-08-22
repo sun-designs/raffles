@@ -1,0 +1,49 @@
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="navbar-content">
+        <a href="#" class="logo">RIFAS</a>
+        <div class="nav-container">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="./rewards.html">Premios</a></li>
+                <li><a href="./results.html">Resultados</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <a href="../auth/login.html" class="btn-login">Iniciar Sesión</a>
+                <a href="../../templates/auth/register.html" class="btn-register">Registrarse</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+// Initialize navbar functionality
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof NavbarController !== 'undefined') {
+        new NavbarController();
+    } else {
+        // Fallback initialization if main script isn't loaded
+        initializeBasicNavbar();
+    }
+});
+
+function initializeBasicNavbar() {
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const authButtons = document.getElementById('authButtons');
+    
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+            authButtons.classList.toggle('active');
+        });
+    }
+}
+</script>

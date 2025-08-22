@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados - Rifas Online</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="results.css">
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    <!-- Include Navbar -->
+    <div id="navbar-container"></div>
+
+    <!-- Hero Section -->
+    <div class="results-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Resultados de Sorteos</h1>
+            <p class="hero-subtitle">Consulta los ganadores de nuestros sorteos anteriores y verifica la transparencia de nuestro proceso</p>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                        <line x1="3" y1="6" x2="21" y2="6"/>
+                        <path d="M16 10a4 4 0 0 1-8 0"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">247</div>
+                    <div class="stat-label">Sorteos Realizados</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <path d="M20 8v6"/>
+                        <path d="M23 11h-6"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">15,432</div>
+                    <div class="stat-label">Ganadores Felices</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"/>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">$2.4M</div>
+                    <div class="stat-label">En Premios Entregados</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number">98.7%</div>
+                    <div class="stat-label">Satisfacción del Cliente</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-container">
+        <div class="filters-content">
+            <h2 class="filters-title">Filtrar Resultados</h2>
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="monthFilter">Mes:</label>
+                    <select id="monthFilter" class="filter-select">
+                        <option value="all">Todos los meses</option>
+                        <option value="2025-01">Enero 2025</option>
+                        <option value="2024-12">Diciembre 2024</option>
+                        <option value="2024-11">Noviembre 2024</option>
+                        <option value="2024-10">Octubre 2024</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="prizeFilter">Tipo de Premio:</label>
+                    <select id="prizeFilter" class="filter-select">
+                        <option value="all">Todos</option>
+                        <option value="electronics">Electrónicos</option>
+                        <option value="vehicles">Vehículos</option>
+                        <option value="cash">Dinero</option>
+                        <option value="other">Otros</option>
+                    </select>
+                </div>
+
+                <div class="search-group">
+                    <input type="text" id="searchInput" placeholder="Buscar por ganador o premio..." class="search-input">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="M21 21l-4.35-4.35"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Winner Section -->
+    <div class="latest-winner-container">
+        <div class="latest-winner-content">
+            <h2 class="section-title">🎉 Último Ganador</h2>
+            <div class="winner-spotlight" id="latestWinner">
+                <!-- Se generará dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-container">
+        <h2 class="section-title">Historial de Resultados</h2>
+        <div class="results-timeline" id="resultsTimeline">
+            <!-- Los resultados se generarán dinámicamente -->
+        </div>
+        
+        <div class="load-more-container">
+            <button class="load-more-btn" onclick="loadMoreResults()">
+                Cargar Más Resultados
+            </button>
+        </div>
+    </div>
+
+    <!-- Include Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Load Scripts -->
+    <script src="navbar.js"></script>
+    <script>
+        // Load navbar
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbar-container').innerHTML = data;
+                if (typeof NavbarController !== 'undefined') {
+                    new NavbarController();
+                }
+            })
+            .catch(error => {
+                console.error('Error loading navbar:', error);
+                document.getElementById('navbar-container').innerHTML = `
+                    <nav class="navbar">
+                        <div class="navbar-content">
+                            <a href="./index.html" class="logo">RIFAS</a>
+                            <div class="nav-container">
+                                <ul class="nav-links" id="navLinks">
+                                    <li><a href="./index.html">Inicio</a></li>
+                                    <li><a href="./rewards.html">Premios</a></li>
+                                    <li><a href="./results.html">Resultados</a></li>
+                                    <li><a href="./index.html#contacto">Contacto</a></li>
+                                </ul>
+                                <div class="auth-buttons" id="authButtons">
+                                    <a href="#login" class="btn-login">Iniciar Sesión</a>
+                                    <a href="#register" class="btn-register">Registrarse</a>
+                                </div>
+                                <div class="hamburger" id="hamburger">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+                `;
+                if (typeof NavbarController !== 'undefined') {
+                    new NavbarController();
+                }
+            });
+
+        // Load footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-container').innerHTML = data;
+            })
+            .catch(error => {
+                console.error('Error loading footer:', error);
+                document.getElementById('footer-container').innerHTML = `
+                    <footer style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: white; padding: 2rem; text-align: center;">
+                        <p>&copy; 2025 RIFAS. Todos los derechos reservados.</p>
+                    </footer>
+                `;
+            });
+
+        // Results data
+        const resultsData = [
+            {
+                id: 1,
+                prizeName: "iPhone 15 Pro Max",
+                prizeValue: "$1,200",
+                prizeCategory: "electronics",
+                winner: "María González",
+                winnerInitials: "M.G.",
+                winnerLocation: "Ciudad de México, CDMX",
+                ticketNumber: "0847",
+                drawDate: "2025-01-28",
+                drawTime: "20:00",
+                totalTickets: 1000,
+                prizeImage: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 2,
+                prizeName: "$10,000 en Efectivo",
+                prizeValue: "$10,000",
+                prizeCategory: "cash",
+                winner: "Carlos Rodríguez",
+                winnerInitials: "C.R.",
+                winnerLocation: "Guadalajara, JAL",
+                ticketNumber: "1523",
+                drawDate: "2025-01-25",
+                drawTime: "19:30",
+                totalTickets: 2000,
+                prizeImage: "https://images.unsplash.com/photo-1607863680198-23d4b2565df0?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 3,
+                prizeName: "Tesla Model 3",
+                prizeValue: "$45,000",
+                prizeCategory: "vehicles",
+                winner: "Ana Martínez",
+                winnerInitials: "A.M.",
+                winnerLocation: "Monterrey, NL",
+                ticketNumber: "0089",
+                drawDate: "2025-01-20",
+                drawTime: "21:00",
+                totalTickets: 200,
+                prizeImage: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 4,
+                prizeName: "PlayStation 5 + Juegos",
+                prizeValue: "$800",
+                prizeCategory: "electronics",
+                winner: "Luis Hernández",
+                winnerInitials: "L.H.",
+                winnerLocation: "Tijuana, BC",
+                ticketNumber: "0456",
+                drawDate: "2025-01-15",
+                drawTime: "18:30",
+                totalTickets: 1500,
+                prizeImage: "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 5,
+                prizeName: "MacBook Air M2",
+                prizeValue: "$1,500",
+                prizeCategory: "electronics",
+                winner: "Patricia López",
+                winnerInitials: "P.L.",
+                winnerLocation: "Mérida, YUC",
+                ticketNumber: "0234",
+                drawDate: "2025-01-10",
+                drawTime: "19:00",
+                totalTickets: 800,
+                prizeImage: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 6,
+                prizeName: "Viaje a Cancún",
+                prizeValue: "$25,000",
+                prizeCategory: "other",
+                winner: "Roberto Silva",
+                winnerInitials: "R.S.",
+                winnerLocation: "Puebla, PUE",
+                ticketNumber: "0667",
+                drawDate: "2024-12-28",
+                drawTime: "20:00",
+                totalTickets: 800,
+                prizeImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 7,
+                prizeName: "$5,000 en Efectivo",
+                prizeValue: "$5,000",
+                prizeCategory: "cash",
+                winner: "Elena Morales",
+                winnerInitials: "E.M.",
+                winnerLocation: "León, GTO",
+                ticketNumber: "1098",
+                drawDate: "2024-12-20",
+                drawTime: "18:00",
+                totalTickets: 1500,
+                prizeImage: "https://images.unsplash.com/photo-1607863680198-23d4b2565df0?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            },
+            {
+                id: 8,
+                prizeName: "Motocicleta Yamaha R3",
+                prizeValue: "$95,000",
+                prizeCategory: "vehicles",
+                winner: "Diego Ramírez",
+                winnerInitials: "D.R.",
+                winnerLocation: "Hermosillo, SON",
+                ticketNumber: "0321",
+                drawDate: "2024-12-15",
+                drawTime: "19:30",
+                totalTickets: 500,
+                prizeImage: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=150&h=150&fit=crop&crop=center",
+                videoUrl: "#",
+                isVerified: true
+            }
+        ];
+
+        let currentPage = 1;
+        let filteredResults = [...resultsData];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeResults();
+            setupFilters();
+            animateStats();
+        });
+
+        // Initialize results
+        function initializeResults() {
+            displayLatestWinner();
+            displayResults();
+        }
+
+        // Display latest winner
+        function displayLatestWinner() {
+            const latest = resultsData[0];
+            const container = document.getElementById('latestWinner');
+            
+            container.innerHTML = `
+                <div class="winner-card featured">
+                    <div class="winner-image">
+                        <img src="${latest.prizeImage}" alt="${latest.prizeName}">
+                        <div class="winner-badge">Último Ganador</div>
+                    </div>
+                    <div class="winner-info">
+                        <h3 class="winner-name">${latest.winner}</h3>
+                        <p class="winner-location">${latest.winnerLocation}</p>
+                        <div class="prize-info">
+                            <h4 class="prize-name">${latest.prizeName}</h4>
+                            <span class="prize-value">${latest.prizeValue}</span>
+                        </div>
+                        <div class="draw-details">
+                            <div class="detail-item">
+                                <span class="label">Boleto Ganador:</span>
+                                <span class="value">#${latest.ticketNumber}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Fecha de Sorteo:</span>
+                                <span class="value">${formatDate(latest.drawDate)} • ${latest.drawTime}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">Total de Boletos:</span>
+                                <span class="value">${latest.totalTickets.toLocaleString()}</span>
+                            </div>
+                        </div>
+                        <div class="verification-badge" onclick="viewDrawVideo(${latest.id})">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="5,3 19,12 5,21 5,3"/>
+                            </svg>
+                            Ver Sorteo
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Display results
+        function displayResults() {
+            const container = document.getElementById('resultsTimeline');
+            const resultsToShow = filteredResults.slice(1, currentPage * 6);
+            
+            container.innerHTML = resultsToShow.map(result => createResultCard(result)).join('');
+        }
+
+        // Create result card
+        function createResultCard(result) {
+            return `
+                <div class="result-card" data-category="${result.prizeCategory}">
+                    <div class="result-date">
+                        <div class="date-day">${new Date(result.drawDate).getDate()}</div>
+                        <div class="date-month">${formatMonth(result.drawDate)}</div>
+                        <div class="date-year">${new Date(result.drawDate).getFullYear()}</div>
+                    </div>
+                    
+                    <div class="result-content">
+                        <div class="result-header">
+                            <img src="${result.prizeImage}" alt="${result.prizeName}" class="result-image">
+                            <div class="result-info">
+                                <h3 class="result-prize">${result.prizeName}</h3>
+                                <div class="result-value">${result.prizeValue}</div>
+                                <div class="result-category">${getCategoryName(result.prizeCategory)}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="result-winner">
+                            <div class="winner-avatar">
+                                <span>${result.winnerInitials}</span>
+                            </div>
+                            <div class="winner-details">
+                                <div class="winner-name">${result.winner}</div>
+                                <div class="winner-location">${result.winnerLocation}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="detail-row">
+                                <span class="label">Boleto Ganador:</span>
+                                <span class="value ticket-number">#${result.ticketNumber}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Hora del Sorteo:</span>
+                                <span class="value">${result.drawTime}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="label">Total de Boletos:</span>
+                                <span class="value">${result.totalTickets.toLocaleString()}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="result-actions">
+                            <button class="action-btn" onclick="viewDrawVideo(${result.id})">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5,3 19,12 5,21 5,3"/>
+                                </svg>
+                                Ver Sorteo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Setup filters
+        function setupFilters() {
+            const monthFilter = document.getElementById('monthFilter');
+            const prizeFilter = document.getElementById('prizeFilter');
+            const searchInput = document.getElementById('searchInput');
+
+            monthFilter.addEventListener('change', applyFilters);
+            prizeFilter.addEventListener('change', applyFilters);
+            searchInput.addEventListener('input', applyFilters);
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const monthFilter = document.getElementById('monthFilter').value;
+            const prizeFilter = document.getElementById('prizeFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredResults = resultsData.filter(result => {
+                const matchesMonth = monthFilter === 'all' || result.drawDate.startsWith(monthFilter);
+                const matchesCategory = prizeFilter === 'all' || result.prizeCategory === prizeFilter;
+                const matchesSearch = searchTerm === '' || 
+                    result.winner.toLowerCase().includes(searchTerm) ||
+                    result.prizeName.toLowerCase().includes(searchTerm);
+
+                return matchesMonth && matchesCategory && matchesSearch;
+            });
+
+            currentPage = 1;
+            displayResults();
+        }
+
+        // Load more results
+        function loadMoreResults() {
+            currentPage++;
+            displayResults();
+            
+            // Hide button if no more results
+            if (currentPage * 6 >= filteredResults.length) {
+                document.querySelector('.load-more-btn').style.display = 'none';
+            }
+        }
+
+        // Animate stats on page load
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const targets = [247, 15432, 2.4, 98.7];
+            
+            statNumbers.forEach((stat, index) => {
+                const target = targets[index];
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (index === 2) {
+                        stat.textContent = `$${current.toFixed(1)}M`;
+                    } else if (index === 3) {
+                        stat.textContent = `${current.toFixed(1)}%`;
+                    } else {
+                        stat.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 20);
+            });
+        }
+
+        // Utility functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', { 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric' 
+            });
+        }
+
+        function formatMonth(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', { month: 'short' }).toUpperCase();
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                electronics: 'Electrónicos',
+                vehicles: 'Vehículos',
+                cash: 'Efectivo',
+                other: 'Otros'
+            };
+            return categories[category] || category;
+        }
+
+        // Action functions
+        function viewDrawVideo(resultId) {
+            alert(`Ver video del sorteo #${resultId}\n\nAquí se abriría el video del sorteo en vivo.`);
+        }
+    </script>
+</body>
+</html>
